@@ -50,7 +50,7 @@ st.info("Ces curseurs remplacent temporairement le DHT11 et le capteur de sol.")
 
 col1, col2 = st.columns(2)
 with col1:
-    temp_locale = st.slider("🌡️ Température DHT11 (°C)", 10.0, 50.0, 25.0)
+    temp_locale = st.slider(" Température DHT11 (°C)", 10.0, 50.0, 25.0)
     hum_air_locale = st.slider(" Humidité Air DHT11 (%)", 20.0, 90.0, 50.0)
 with col2:
     hum_sol = st.slider(" Humidité du Sol (%)", 0.0, 100.0, 30.0)
