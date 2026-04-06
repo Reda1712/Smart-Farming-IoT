@@ -5,7 +5,7 @@ import requests
 
 # 1. Configuration de la page
 st.set_page_config(page_title="Smart Farming Dashboard", layout="centered")
-st.title("🌱 Smart Farming - INPT")
+st.title(" Smart Farming - INPT")
 st.subheader("Supervision Hybride : Capteurs Locaux + Cloud")
 
 st.divider()
@@ -29,7 +29,7 @@ def recuperer_meteo_live(api_key, ville="Casablanca,MA"):
 MA_CLE_API = "VOTRE_CLE_API_ICI"
 temp_api, pluie_live, desc_live = recuperer_meteo_live(MA_CLE_API)
 
-st.write("### ☁️ Météo Globale (Casablanca - Cloud)")
+st.write("###  Météo Globale (Casablanca - Cloud)")
 col_m1, col_m2, col_m3 = st.columns(3)
 col_m1.metric("Ciel", desc_live.capitalize())
 col_m2.metric("Temp. Ville", f"{temp_api} °C")
@@ -41,24 +41,24 @@ st.divider()
 try:
     modele = joblib.load('cerveau_pompe.pkl')
 except FileNotFoundError:
-    st.error("⚠️ Fichier 'cerveau_pompe.pkl' introuvable.")
+    st.error(" Fichier 'cerveau_pompe.pkl' introuvable.")
     st.stop()
 
 # 4. Simulation du Matériel Local (ESP32)
-st.write("### 🎛️ Capteurs Locaux (Simulation ESP32)")
+st.write("###  Capteurs Locaux (Simulation ESP32)")
 st.info("Ces curseurs remplacent temporairement le DHT11 et le capteur de sol.")
 
 col1, col2 = st.columns(2)
 with col1:
     temp_locale = st.slider("🌡️ Température DHT11 (°C)", 10.0, 50.0, 25.0)
-    hum_air_locale = st.slider("☁️ Humidité Air DHT11 (%)", 20.0, 90.0, 50.0)
+    hum_air_locale = st.slider(" Humidité Air DHT11 (%)", 20.0, 90.0, 50.0)
 with col2:
-    hum_sol = st.slider("🌍 Humidité du Sol (%)", 0.0, 100.0, 30.0)
+    hum_sol = st.slider(" Humidité du Sol (%)", 0.0, 100.0, 30.0)
 
 st.divider()
 
 # 5. Le Moteur de Décision (Le cerveau hybride)
-st.write("### 🤖 Décision de l'Intelligence Artificielle")
+st.write("###  Décision de l'Intelligence Artificielle")
 
 # L'IA prend les données LOCALES du DHT11, l'humidité du sol, ET la pluie du CLOUD !
 donnees_actuelles = pd.DataFrame([[temp_locale, hum_air_locale, hum_sol, pluie_live]], 
@@ -67,8 +67,8 @@ donnees_actuelles = pd.DataFrame([[temp_locale, hum_air_locale, hum_sol, pluie_l
 prediction = modele.predict(donnees_actuelles)[0]
 
 if prediction == 1:
-    st.success("💧 DÉCISION : ALLUMER LA POMPE (ON)")
+    st.success(" DÉCISION : ALLUMER LA POMPE (ON)")
     st.write("L'IA analyse tes capteurs locaux et la météo cloud : les conditions exigent un arrosage.")
 else:
-    st.error("🛑 DÉCISION : POMPE ÉTEINTE (OFF)")
+    st.error(" DÉCISION : POMPE ÉTEINTE (OFF)")
     st.write("L'IA bloque l'arrosage pour économiser l'eau (sol humide ou pluie imminente).")
